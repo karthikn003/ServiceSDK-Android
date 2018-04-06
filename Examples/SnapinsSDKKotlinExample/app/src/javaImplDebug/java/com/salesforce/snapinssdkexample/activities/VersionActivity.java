@@ -1,10 +1,32 @@
 package com.salesforce.snapinssdkexample.activities;
 
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
+
+import com.salesforce.android.chat.core.BuildConfig;;
+import com.salesforce.snapinssdkexample.R;
 
 /**
- * Created by riley.macdonald on 3/21/18.
+ * Activity to display the versions of the snap-ins SDKs
  */
-
 public class VersionActivity extends AppCompatActivity {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+
+        setContentView(R.layout.activity_version);
+
+        populateVersionText();
+    }
+
+    private void populateVersionText() {
+        ((TextView)findViewById(R.id.chat_version)).setText(BuildConfig.VERSION_NAME);
+        ((TextView)findViewById(R.id.sos_version)).setText(com.salesforce.android.sos.BuildConfig.VERSION_NAME);
+        ((TextView)findViewById(R.id.kb_version)).setText(com.salesforce.android.knowledge.core.BuildConfig.VERSION_NAME);
+        ((TextView)findViewById(R.id.cases_version)).setText(com.salesforce.android.cases.core.BuildConfig.VERSION_NAME);
+        ((TextView)findViewById(R.id.common_version)).setText(com.salesforce.android.service.common.ui.BuildConfig.VERSION_NAME);
+    }
 }

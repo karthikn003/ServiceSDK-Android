@@ -77,7 +77,7 @@ class SupportHomeViewAddition: KnowledgeViewAddition {
 
     /**
      * Determines which scenes should have the view addition.
-     */
+    */
     override fun visibleFor(knowledgeScene: KnowledgeScene): Boolean {
         // Limit visibility of the FAB to the knowledge home page
         return (knowledgeScene == KnowledgeScene.SCENE_HOME)
@@ -112,7 +112,7 @@ class SupportHomeViewAddition: KnowledgeViewAddition {
      * Configures and launches Live Agent Chat
      */
     private fun launchChat() {
-        // Create a UI configuration instance from a core config object
+    // Create a UI configuration instance from a core config object
         val chatConfiguration = ServiceSDKUtils.getChatConfigurationBuilder(context)
             .preChatFields(buildPreChatFields())
             .build()
