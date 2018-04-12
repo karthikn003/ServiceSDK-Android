@@ -42,8 +42,8 @@ import java.util.Map;
  * </ul>
  */
 public class MainActivity extends AppCompatActivity implements SosAvailability.Listener {
-    private KnowledgeUI mKnowledgeUI = null;
-    private KnowledgeUIClient mKnowledgeUIClient = null;
+    private KnowledgeUI mKnowledgeUI;
+    private KnowledgeUIClient mKnowledgeUIClient;
     private TextView knowledgeLaunchButton;
     private Button loginButton;
     private Button logoutButton;
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements SosAvailability.L
                 Toast.LENGTH_SHORT).show();
     }
 
-    public Boolean startActivityFor(Class<? extends AppCompatActivity> activityClass) {
+    public boolean startActivityFor(Class<? extends AppCompatActivity> activityClass) {
         startActivity(new Intent(getApplicationContext(), activityClass));
         return true;
     }
@@ -210,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements SosAvailability.L
             // Create the KnowledgeUI Configuration
             mKnowledgeUI = ServiceSDKUtils.getKnowledgeUI(
                     getApplicationContext(),
-                    ServiceSDKUtils.getAuthenticatedUser());
+                    ServiceSDKUtils.authenticatedUser());
             // Add the view addition
             mKnowledgeUI.viewAddition(new SupportHomeViewAddition());
         }
@@ -250,7 +250,9 @@ public class MainActivity extends AppCompatActivity implements SosAvailability.L
      * Initiates user login process.
      */
     private void login() {
-        SalesforceSDKManager.getInstance().getClientManager().getRestClient(this, new ClientManager.RestClientCallback() {
+        SalesforceSDKManager.getInstance()
+                .getClientManager()
+                .getRestClient(this, new ClientManager.RestClientCallback() {
             @Override
             public void authenticatedRestClient(RestClient client) {
                 // left blank intentionally

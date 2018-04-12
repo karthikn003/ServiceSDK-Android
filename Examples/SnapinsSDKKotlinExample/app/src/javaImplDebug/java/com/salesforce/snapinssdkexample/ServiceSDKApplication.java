@@ -14,6 +14,7 @@ public class ServiceSDKApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        // Initialize Salesforce Mobile SDK for authentication
         initializeSalesforceSDKManager(MainActivity.class);
 
         chatSessionListener = new ChatSessionListener(getApplicationContext());

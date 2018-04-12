@@ -38,9 +38,9 @@ public class ServiceSDKUtils {
                         context.getString(R.string.pref_chat_org_id_default)),
                 getStringPref(context, ChatSettingsActivity.KEY_BUTTON_ID,
                         context.getString(R.string.pref_chat_button_id_default)),
-                getStringPref(context, ChatSettingsActivity.KEY_DEVELPMENT_ID,
+                getStringPref(context, ChatSettingsActivity.KEY_DEVELOPMENT_ID,
                         context.getString(R.string.pref_chat_deployment_id_default)),
-                getStringPref(context, ChatSettingsActivity.KEY_LIVEAGENT_POD,
+                getStringPref(context, ChatSettingsActivity.KEY_LIVE_AGENT_POD,
                         context.getString(R.string.pref_chat_button_id_default))
         );
     }
@@ -57,7 +57,7 @@ public class ServiceSDKUtils {
             coreConfiguration = KnowledgeConfiguration.builder(
                     getStringPref(context, KnowledgeSettingsActivity.KEY_COMMUNITY_URL,
                             context.getString(R.string.pref_case_community_url_default)))
-                    .withAuthConfig(getAuthTokenProvider(userAccount), new MobileSdkUser(userAccount.getUserId()))
+                    .withAuthConfig(authTokenProvider(userAccount), new MobileSdkUser(userAccount.getUserId()))
                     .build();
         }
 
@@ -142,7 +142,7 @@ public class ServiceSDKUtils {
                     context.getString(R.string.pref_case_list_name_default)));
 
             caseConfigurationBuilder.withAuthConfig(
-                    getAuthTokenProvider(userAccount),
+                    authTokenProvider(userAccount),
                     new MobileSdkUser(userAccount.getUserId()));
 
         }
@@ -153,14 +153,14 @@ public class ServiceSDKUtils {
     /**
      * Returns a nullable value of the current authenticated user
      */
-    public static UserAccount getAuthenticatedUser() {
+    public static UserAccount authenticatedUser() {
         return SalesforceSDKManager.getInstance().getUserAccountManager().getCurrentUser();
     }
 
     /**
      * Returns an MobileSDKAuthTokenProvider for the provided UserAccount.
      */
-    private static MobileSDKAuthTokenProvider getAuthTokenProvider(UserAccount user) {
+    private static MobileSDKAuthTokenProvider authTokenProvider(UserAccount user) {
         ClientManager.AccMgrAuthTokenProvider accMgrAuthTokenProvider =
                 new ClientManager.AccMgrAuthTokenProvider(
                         SalesforceSDKManager.getInstance().getClientManager(),

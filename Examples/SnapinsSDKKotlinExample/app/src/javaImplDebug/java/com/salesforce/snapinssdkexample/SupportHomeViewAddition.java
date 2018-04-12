@@ -122,8 +122,8 @@ public class SupportHomeViewAddition implements KnowledgeViewAddition{
 
         AnimatorSet set = new AnimatorSet();
         set.playTogether(
-                ObjectAnimator.ofFloat(fab, "scaleX", value),
-                ObjectAnimator.ofFloat(fab, "scaleY", value)
+                ObjectAnimator.ofFloat(fab, View.SCALE_X, value),
+                ObjectAnimator.ofFloat(fab, View.SCALE_Y, value)
         );
         return set;
     }
@@ -141,6 +141,7 @@ public class SupportHomeViewAddition implements KnowledgeViewAddition{
         ServiceSDKApplication serviceSDKApplication = (ServiceSDKApplication) context.getApplicationContext();
         final ChatSessionListener chatListener = serviceSDKApplication.getChatSessionListener();
 
+        // Create the chat UI from the ChatUIConfiguration object
         ChatUI.configure(ChatUIConfiguration.create(chatConfiguration))
                 .createClient(context)
                 .onResult(new Async.ResultHandler<ChatUIClient>() {
@@ -158,15 +159,17 @@ public class SupportHomeViewAddition implements KnowledgeViewAddition{
      * Configures pre chat fields if prechat is enabled in settings
      */
     private List<PreChatField> buildPreChatFields(){
+        // Create a pre-chat field for the user's name if it's enabled
         PreChatField preChatField1 = new PreChatField.Builder()
                     .build(context.getString(R.string.prechat_agent_info_label),
                             context.getString(R.string.prechat_enter_name_label),
                             PreChatField.STRING);
 
+        // Create a pre-chat picklist field that has selecting pre-defined values
         PreChatField preChatField2 = new PreChatField.Builder()
                 .required(true)
                 .addPickListOption(new PreChatField.PickListOption(
-                        context.getString(R.string.prechat_example_id) + 1,
+                        context.getString(R.string.prechat_example_id) + '1',
                         context.getString(R.string.prechat_example_selection_one)))
                 .addPickListOption(new PreChatField.PickListOption(
                         context.getString(R.string.prechat_example_id) + 2,
@@ -191,7 +194,7 @@ public class SupportHomeViewAddition implements KnowledgeViewAddition{
     /**
      * Configures and launches SOS
      */
-    private Boolean launchSos() {
+    private boolean launchSos() {
         Sos.session(ServiceSDKUtils.getSosOptions(context))
                 .configuration(ServiceSDKUtils.getSosConfiguration(context))
                 .start((Activity) context);
@@ -201,7 +204,7 @@ public class SupportHomeViewAddition implements KnowledgeViewAddition{
     /**
      * Configures and launches Cases
      */
-    private Boolean launchCases() {
+    private boolean launchCases() {
         // Create configuration callback function
         CaseClientCallbacks caseClientCallbacks = new CaseClientCallbacks() {
             // Populate hidden fields
@@ -219,7 +222,7 @@ public class SupportHomeViewAddition implements KnowledgeViewAddition{
                         ServiceSDKUtils.getCaseConfiguration(
                                 context,
                                 caseClientCallbacks,
-                                ServiceSDKUtils.getAuthenticatedUser()
+                                ServiceSDKUtils.authenticatedUser()
                         )
                 )
         );
