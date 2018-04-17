@@ -10,8 +10,8 @@
     <!-- ========================== DEFAULT CONFIGURATION VALUES =============================== -->
     <!-- ======================================================================================= -->
     <!-- Default Knowledge Configuration Values -->
-    <string name="pref_kb_data_category_group_default">Travel</string>
-    <string name="pref_kb_root_data_category_default">All</string>
+    <string name="pref_kb_data_category_group_default">groupDefault</string>
+    <string name="pref_kb_root_data_category_default">categoryDefault</string>
 
     <!-- SOS Default Config Values -->
     <string name="pref_sos_pod_url_default">sosPodUrlDefault</string>

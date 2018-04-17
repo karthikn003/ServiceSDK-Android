@@ -43,4 +43,7 @@ ext {
 
     // Android
     appCompatV7SupportVersion = "27.0.2"
+
+    //Main resource dir
+    mainResourceDir = ['main/res']
 }

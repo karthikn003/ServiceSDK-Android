@@ -44,10 +44,10 @@ android {
 
     sourceSets {
         kotlinImplDebug {
-            res.srcDirs = ['main/res'] // FIXME define in one place?
+            res.srcDirs = mainResourceDir
         }
         javaImplDebug {
-            res.srcDirs = ['main/res'] // FIXME define in one place?
+            res.srcDirs = mainResourceDir
         }
     }
 
@@ -61,7 +61,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     // Android
@@ -71,5 +70,4 @@ dependencies {
     // Salesforce SDKs
     implementation "com.salesforce.service:servicesdk:${rootProject.ext.serviceSdkVersion}"
     implementation "com.salesforce.mobilesdk:SalesforceSDK:${rootProject.ext.mobilesdkVersion}"
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 }
