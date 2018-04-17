@@ -10,6 +10,15 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+    signingConfigs {
+        defaultSigningConfig {
+            // FIXME publish a public default signing configuration?
+            storeFile file(project.service_sdk_keystore)
+            storePassword project.service_sdk_keystore_password
+            keyAlias project.service_sdk_key_alias
+            keyPassword project.service_sdk_key_password
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.salesforce.snapinssdkexample"
@@ -20,25 +29,44 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        release {
+        kotlinImplDebug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.defaultSigningConfig
+        }
+        javaImplDebug {
+            minifyEnabled false
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.defaultSigningConfig
         }
     }
+
+    sourceSets {
+        kotlinImplDebug {
+            res.srcDirs = mainResourceDir
+        }
+        javaImplDebug {
+            res.srcDirs = mainResourceDir
+        }
+    }
+
+    // Ignore debug and release variants to favor use of kotlinImplDebug and javaImplDebug
+    variantFilter { variant ->
+        if (variant.buildType.name.equals('release') || variant.buildType.name.equals('debug')) {
+            variant.setIgnore(true)
+        }
+    }
+
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-
     // Android
     implementation "com.android.support:appcompat-v7:$appCompatV7SupportVersion"
-
     // FAB Speeddial
     implementation "io.github.yavski:fab-speed-dial:$fab_speed_dial_version"
-
     // Salesforce SDKs
     implementation "com.salesforce.service:servicesdk:${rootProject.ext.serviceSdkVersion}"
     implementation "com.salesforce.mobilesdk:SalesforceSDK:${rootProject.ext.mobilesdkVersion}"
